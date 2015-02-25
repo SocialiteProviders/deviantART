@@ -17,7 +17,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://www.deviantart.com/oauth2/authorize', $state);
+        return $this->buildAuthUrlFromBase(
+            'https://www.deviantart.com/oauth2/authorize', $state
+        );
     }
 
     /**
@@ -33,7 +35,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get('https://www.deviantart.com/api/v1/oauth2/user/whoami?access_token='.$token, [
+        $response = $this->getHttpClient()->get(
+            'https://www.deviantart.com/api/v1/oauth2/user/whoami?access_token='.$token, [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
             ],
@@ -48,11 +51,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id'       => $user['userid'],
-            'nickname' => $user['username'],
-            'name'     => null,
-            'email'    => null,
-            'avatar'   => $user['usericon'],
+            'id' => $user['userid'], 'nickname' => $user['username'],
+            'name' => null, 'email' => null, 'avatar' => $user['usericon'],
         ]);
     }
 
@@ -61,6 +61,8 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-        return array_merge(parent::getTokenFields($code), ['grant_type' => 'authorization_code']);
+        return array_merge(parent::getTokenFields($code), [
+            'grant_type' => 'authorization_code',
+        ]);
     }
 }
