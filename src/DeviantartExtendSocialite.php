@@ -1,4 +1,5 @@
 <?php
+
 namespace SocialiteProviders\Deviantart;
 
 use SocialiteProviders\Manager\SocialiteWasCalled;
